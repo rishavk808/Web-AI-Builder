@@ -6,6 +6,7 @@ import { ImNewTab } from "react-icons/im";
 import { IoMdDownload } from "react-icons/io";
 import { BiSolidShow } from "react-icons/bi";
 import { FaEyeSlash } from "react-icons/fa";
+import Editor from '@monaco-editor/react';
 
 const App = () =>{
     const [prompt, setPrompt] = useState("");
@@ -37,8 +38,14 @@ const App = () =>{
            <div onClick={() => { setIsShowCode(!isShowCode) }} className="icon !w-[auto] !p-[12px] flex items-center gap-[10px]">{isShowCode ? "Hide Code" : "Show Code"} {isShowCode ? <FaEyeSlash /> : <BiSolidShow />}</div>
             </div>
             </div>
+            {
+              isShowCode ? <>
+              <Editor height="100%" defaultLanguage="html" defaultValue="<h1>Build Your Web</h1>" />
+              </> : <>
+              <iframe srcDoc = "" className = 'w-full bg-[white]'></iframe>
+              </>
+            }
             
-            <iframe srcDoc = "" className = 'w-full bg-[white]'></iframe>
            </div>
           </div>
         </>
