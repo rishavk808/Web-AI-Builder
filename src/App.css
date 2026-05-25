@@ -172,7 +172,7 @@ html{
   background-color: transparent !important;
 }
 
-/* .newTabIframe{
+.newTabIframe{
   height: calc(100vh - 70px);
   background-color: white;
-} */
+}
