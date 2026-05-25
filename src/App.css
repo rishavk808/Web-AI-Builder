@@ -166,3 +166,13 @@ html{
   border-bottom: 1px solid #ccc;
   background-color: #efeeee;
 }
+
+.modelCon .icons .icon:hover{
+  transform: scale(1.1);
+  background-color: transparent !important;
+}
+
+/* .newTabIframe{
+  height: calc(100vh - 70px);
+  background-color: white;
+} */
