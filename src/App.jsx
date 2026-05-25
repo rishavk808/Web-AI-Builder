@@ -4,9 +4,13 @@ import Navbar from './components/Navbar'
 import { MdArrowUpward } from "react-icons/md";
 import { ImNewTab } from "react-icons/im";
 import { IoMdDownload } from "react-icons/io";
+import { BiSolidShow } from "react-icons/bi";
+import { FaEyeSlash } from "react-icons/fa";
 
 const App = () =>{
     const [prompt, setPrompt] = useState("");
+    const [isShowCode, setIsShowCode] = useState(false);
+
     return (
         <>
           <Navbar/>
@@ -30,9 +34,11 @@ const App = () =>{
                <div className="icons flex items-center gap-[15px]">
                <div className= "icon !w-[auto] !p-[12px] flex items-center gap-[10px]">Open in new tab <ImNewTab /></div>
                <div className= "icon !w-[auto] !p-[12px] flex items-center gap-[10px]">Download<IoMdDownload /></div>
+           <div onClick={() => { setIsShowCode(!isShowCode) }} className="icon !w-[auto] !p-[12px] flex items-center gap-[10px]">{isShowCode ? "Hide Code" : "Show Code"} {isShowCode ? <FaEyeSlash /> : <BiSolidShow />}</div>
             </div>
             </div>
-           
+            
+            <iframe srcDoc = "" className = 'w-full bg-[white]'></iframe>
            </div>
           </div>
         </>
