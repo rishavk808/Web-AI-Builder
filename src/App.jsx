@@ -11,7 +11,23 @@ import Editor from '@monaco-editor/react';
 const App = () =>{
     const [prompt, setPrompt] = useState("");
     const [isShowCode, setIsShowCode] = useState(false);
-
+    const [isInNewTab, setIsInNewTab] = useState(false);
+    const [code, setCode] = useState(
+      `
+      <!DOCTYPE html>
+      <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+      </head>
+      <body class="p-[10px]">
+        <h1 class="text-[30px] font-[700]">Welcome to WebAI</h1>
+      </body>
+      </html>
+      `
+    );
     return (
         <>
           <Navbar/>
@@ -33,21 +49,37 @@ const App = () =>{
               <h3 className = 'font-bold text-[16px]'>Live Preview</h3>
 
                <div className="icons flex items-center gap-[15px]">
-               <div className= "icon !w-[auto] !p-[12px] flex items-center gap-[10px]">Open in new tab <ImNewTab /></div>
+               <div onClick = {()=>{setIsInNewTab(true)}} className= "icon !w-[auto] !p-[12px] flex items-center gap-[10px]">Open in new tab <ImNewTab /></div>
                <div className= "icon !w-[auto] !p-[12px] flex items-center gap-[10px]">Download<IoMdDownload /></div>
            <div onClick={() => { setIsShowCode(!isShowCode) }} className="icon !w-[auto] !p-[12px] flex items-center gap-[10px]">{isShowCode ? "Hide Code" : "Show Code"} {isShowCode ? <FaEyeSlash /> : <BiSolidShow />}</div>
             </div>
             </div>
             {
               isShowCode ? <>
-              <Editor height="100%" defaultLanguage="html" defaultValue="<h1>Build Your Web</h1>" />
+              <Editor height="100%" theme = "vs-dark" defaultLanguage="html" defaultValue={code} />
               </> : <>
-              <iframe srcDoc = "" className = 'w-full bg-[white]'></iframe>
+              <iframe srcDoc = {code} className = 'w-full bg-[white]'></iframe>
               </>
             }
             
            </div>
           </div>
+          {
+            isInNewTab ? 
+            <>
+            <div className="modelCon">
+              <div className="modelBox text-black">
+                <div className="header w-full px-[50px] h-[70px] flex items-center justify-between">
+                   <h3 className = 'font-[700]'>Preview</h3>
+
+                   <div className="icons flex items-center gap-[15px]">
+                    <div className="icon"></div>
+                   </div>
+                </div>
+              </div>
+            </div>
+            </> : ""
+          }
         </>
     )
 }
