@@ -44,6 +44,17 @@ const App = () => {
     return match ? match[1].trim() : response.trim();
   };
 
+    const downloadCode = ()=> {
+    let filename = "webBuilderCode.html";
+    let blob = new Blob([code], {type: "text/plain"});
+    let url = URL.createObjectURL(blob);
+    let a = document.createElement("a");
+    a.href = url;
+    a.download = filename;
+    a.click();
+  };
+
+
   async function getResponse() {
 
     if (prompt === "") {
