@@ -130,3 +130,12 @@ html{
   align-items: center;
   justify-content: space-between;
 }
+
+.preview{
+  overflow: hidden;
+}
+
+.preview iframe{
+  height: calc(100vh - 70px);
+  overflow: auto;
+}
