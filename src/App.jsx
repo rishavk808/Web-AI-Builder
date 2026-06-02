@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import "./App.css"
 import Navbar from './components/Navbar'
 import { MdArrowUpward } from "react-icons/md";
@@ -13,6 +13,134 @@ import { ImMobile } from "react-icons/im";
 import { IoMdClose } from "react-icons/io";
 
 const App = () => {
+  function getFallbackPreview(darkMode) {
+    return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WebAI - AI-Powered Website Builder</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: #f8fafc;
+    }
+    body.light {
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      color: #0f172a;
+    }
+    .container {
+      width: min(100%, 960px);
+      text-align: center;
+    }
+    .hero-title {
+      margin: 0;
+      font-size: clamp(2.5rem, 4vw, 4rem);
+      line-height: 1.02;
+      letter-spacing: -0.04em;
+    }
+    .hero-subtitle {
+      margin: 24px auto 0;
+      max-width: 720px;
+      font-size: 1.05rem;
+      line-height: 1.8;
+      opacity: 0.85;
+    }
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      margin: 40px 0;
+    }
+    .card {
+      border-radius: 28px;
+      padding: 24px;
+      background: rgba(15, 23, 42, 0.9);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.18);
+      text-align: left;
+    }
+    body.light .card {
+      background: rgba(255, 255, 255, 0.95);
+      box-shadow: 0 24px 60px rgba(15, 23, 42, 0.08);
+    }
+    .card-title {
+      margin: 0 0 12px;
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
+    .card-text {
+      margin: 0;
+      font-size: 0.95rem;
+      line-height: 1.7;
+      opacity: 0.85;
+    }
+    .highlight {
+      display: inline-block;
+      background: linear-gradient(135deg, #7c3aed 0%, #38bdf8 100%);
+      -webkit-background-clip: text;
+      color: transparent;
+      font-weight: 800;
+    }
+    .cta-panel {
+      border-radius: 28px;
+      padding: 32px;
+      background: linear-gradient(135deg, rgba(124, 58, 237, 0.95), rgba(59, 130, 246, 0.95));
+      color: #ffffff;
+    }
+    body.light .cta-panel {
+      background: linear-gradient(135deg, rgba(37, 99, 235, 0.95), rgba(59, 130, 246, 0.95));
+      color: #ffffff;
+    }
+    .cta-panel p {
+      margin: 0;
+      opacity: 0.92;
+      line-height: 1.7;
+    }
+  </style>
+</head>
+<body class="${darkMode ? 'dark' : 'light'}">
+  <div class="container">
+    <p class="highlight">WebAI Preview</p>
+    <h1 class="hero-title">AI-powered website builder</h1>
+    <p class="hero-subtitle">Describe your website idea and watch AI generate a fully structured landing page instantly.</p>
+
+    <div class="cards">
+      <div class="card">
+        <div style="font-size: 2rem; margin-bottom: 16px;">✨</div>
+        <h2 class="card-title">AI-Powered</h2>
+        <p class="card-text">Generate clean HTML with a modern design system and smart interaction structure.</p>
+      </div>
+      <div class="card">
+        <div style="font-size: 2rem; margin-bottom: 16px;">⚡</div>
+        <h2 class="card-title">Lightning Fast</h2>
+        <p class="card-text">Turn your prompt into a responsive website preview in seconds.</p>
+      </div>
+      <div class="card">
+        <div style="font-size: 2rem; margin-bottom: 16px;">🎨</div>
+        <h2 class="card-title">Fully Responsive</h2>
+        <p class="card-text">Looks great on desktop, tablet, and mobile with polished spacing and typography.</p>
+      </div>
+    </div>
+
+    <section class="cta-panel">
+      <p style="font-size: 1.05rem; font-weight: 700; margin-bottom: 12px;">Ready to build something amazing?</p>
+      <p>Type your website description in the prompt box above and watch the magic happen.</p>
+    </section>
+  </div>
+</body>
+</html>`
+  }
+
   const [prompt, setPrompt] = useState("");
   const [isShowCode, setIsShowCode] = useState(false);
   const [isInNewTab, setIsInNewTab] = useState(false);
@@ -20,71 +148,16 @@ const App = () => {
   const [isDarkMode, setIsDarkMode] = useState(true); // Default theme is dark
   const [geminiFailureCount, setGeminiFailureCount] = useState(0);
   const [isGeminiBusy, setIsGeminiBusy] = useState(false);
-  const [code, setCode] = useState(
-    `<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>WebAI - AI-Powered Website Builder</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    body {
-      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-      min-height: 100vh;
-    }
-    body.dark-mode {
-      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-    }
-  </style>
-</head>
-<body class="flex items-center justify-center p-6">
-  <div class="max-w-2xl w-full text-center">
-    <div class="mb-8">
-      <h1 class="text-5xl font-bold mb-4 bg-gradient-to-r from-violet-600 to-purple-600 bg-clip-text text-transparent">
-        Welcome to WebAI
-      </h1>
-      <p class="text-xl text-gray-700 mb-2">AI-Powered Website Builder</p>
-      <p class="text-lg text-gray-600 leading-relaxed">
-        Describe your website idea and let AI generate beautiful, fully-functional HTML in seconds.
-      </p>
-    </div>
-    
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 my-12">
-      <div class="bg-white/80 backdrop-blur rounded-xl p-6 shadow-lg hover:shadow-xl transition">
-        <div class="text-4xl mb-3">✨</div>
-        <h3 class="font-semibold text-gray-800 mb-2">AI-Powered</h3>
-        <p class="text-sm text-gray-600">Generate code with simple prompts</p>
-      </div>
-      <div class="bg-white/80 backdrop-blur rounded-xl p-6 shadow-lg hover:shadow-xl transition">
-        <div class="text-4xl mb-3">⚡</div>
-        <h3 class="font-semibold text-gray-800 mb-2">Lightning Fast</h3>
-        <p class="text-sm text-gray-600">Get your website in minutes</p>
-      </div>
-      <div class="bg-white/80 backdrop-blur rounded-xl p-6 shadow-lg hover:shadow-xl transition">
-        <div class="text-4xl mb-3">🎨</div>
-        <h3 class="font-semibold text-gray-800 mb-2">Fully Responsive</h3>
-        <p class="text-sm text-gray-600">Works on all devices perfectly</p>
-      </div>
-    </div>
-
-    <div class="bg-gradient-to-r from-violet-500 to-purple-600 text-white rounded-xl p-8 shadow-2xl">
-      <p class="text-lg font-semibold mb-2">Ready to build something amazing?</p>
-      <p class="text-sm opacity-90">Type your website description in the prompt box above and watch the magic happen!</p>
-    </div>
-  </div>
-
-  <script>
-    const theme = localStorage.getItem('theme') || 'light';
-    if (theme === 'dark') {
-      document.body.classList.add('dark-mode');
-    }
-  </script>
-</body>
-</html>`
-  );
+  const [isPlaceholder, setIsPlaceholder] = useState(true);
+  const [code, setCode] = useState(getFallbackPreview(true));
 
   const apiKey = import.meta.env.VITE_API_KEY || '';
+
+  useEffect(() => {
+    if (isPlaceholder) {
+      setCode(getFallbackPreview(isDarkMode));
+    }
+  }, [isDarkMode, isPlaceholder]);
 
   // ✅ Clean Extraction of markdown code blocks
   function extractCode(response) {
@@ -141,14 +214,14 @@ const App = () => {
 
     setLoading(true);
 
-    const text_prompt = `You are an expert frontend developer and UI/UX designer. The user will provide a detailed prompt describing what kind of website they want. Based on the user’s description, generate a fully working, production-ready website as a **single HTML file**. Use only **HTML, Tailwind CSS (via CDN)**, vanilla JavaScript, and GSAP (via CDN).  
+    const text_prompt = `You are an expert frontend developer and UI/UX designer. The user will provide a detailed prompt describing what kind of website they want. Based on the user’s description, generate a fully working, production-ready website as a **single HTML file**. Use only **HTML, plain CSS**, vanilla JavaScript, and GSAP (via CDN).  
 
 Strict output rules:
 - Return the website as a single fenced Markdown code block with the language tag.  
 - Do NOT include any explanations, text, or extra code blocks outside that single block. Only the HTML file content.  
 
 Technical requirements:
-1. **Stack**: HTML + Tailwind CSS (via CDN) + vanilla JavaScript + GSAP (via CDN). Everything in one file.  
+1. **Stack**: HTML + CSS + vanilla JavaScript + GSAP (via CDN). Everything in one file.  
 2. **Responsive**: Must be fully responsive (mobile, tablet, desktop) with modern grid and flex layouts.  
 3. **Theme**: Default **dark mode**, but if the website type fits better in light mode, auto-select light mode. Include a **toggle button** to switch between dark and light themes.  
 4. **Animations & Interactions**:   
@@ -166,8 +239,8 @@ Technical requirements:
    - **Main content**: features grid, product showcase, gallery, blog cards, or whatever fits user’s request.  
    - **Call to Action** with strong button.  
    - **Footer** with the text: "Made with WebBuilder"  
-7. **Code quality**: Clean, semantic HTML5, ARIA labels for accessibility, well-indented, professional Tailwind usage.  
-8. **Performance**: Optimized. No external CSS/JS frameworks beyond Tailwind + GSAP. Use responsive images, gradients, inline SVGs, or Unsplash placeholders.  
+7. **Code quality**: Clean, semantic HTML5, ARIA labels for accessibility, well-indented, and professional CSS usage.  
+8. **Performance**: Optimized. No external CSS/JS frameworks beyond GSAP. Use responsive images, gradients, inline SVGs, or Unsplash placeholders.  
 
 Final instruction: Output only the single fenced Markdown code block with the full HTML file content. Nothing else.  
 
@@ -184,6 +257,7 @@ Website prompt: ${prompt}`;
         setCode(extractCode(generatedText));
         setGeminiFailureCount(0);
         setIsGeminiBusy(false);
+        setIsPlaceholder(false);
       } else {
         throw new Error("Empty response received.");
       }
@@ -295,7 +369,7 @@ Website prompt: ${prompt}`;
             ) : (
               <>
                 {loading ? (
-                  // Elegant Custom Tailwind CSS Spinner
+                  // Elegant custom spinner
                   <div className="w-full h-full flex items-center justify-center flex-col">
                     <div className="relative w-16 h-16">
                       <div className="absolute top-0 left-0 w-full h-full border-4 border-purple-200 rounded-full animate-pulse"></div>
@@ -307,7 +381,7 @@ Website prompt: ${prompt}`;
                     <p className="text-[15px] mt-2 text-neutral-400">This may take a few minutes while the AI builds your complete site.</p>
                   </div>
                 ) : (
-                  <iframe srcDoc={code} title="Live Site" className="w-full h-full bg-white border-none"></iframe>
+                  <iframe srcDoc={code} title="Live Site" className={`w-full h-full border-none ${isDarkMode ? 'bg-[#0b1120]' : 'bg-white'}`}></iframe>
                 )}
               </>
             )}
