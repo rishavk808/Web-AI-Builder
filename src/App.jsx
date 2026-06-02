@@ -26,11 +26,60 @@ const App = () => {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>WebAI - AI-Powered Website Builder</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      min-height: 100vh;
+    }
+    body.dark-mode {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    }
+  </style>
 </head>
-<body class="p-[10px]">
-  <h1 class="text-[30px] font-[700]">Welcome to WebAI</h1>
+<body class="flex items-center justify-center p-6">
+  <div class="max-w-2xl w-full text-center">
+    <div class="mb-8">
+      <h1 class="text-5xl font-bold mb-4 bg-gradient-to-r from-violet-600 to-purple-600 bg-clip-text text-transparent">
+        Welcome to WebAI
+      </h1>
+      <p class="text-xl text-gray-700 mb-2">AI-Powered Website Builder</p>
+      <p class="text-lg text-gray-600 leading-relaxed">
+        Describe your website idea and let AI generate beautiful, fully-functional HTML in seconds.
+      </p>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 my-12">
+      <div class="bg-white/80 backdrop-blur rounded-xl p-6 shadow-lg hover:shadow-xl transition">
+        <div class="text-4xl mb-3">✨</div>
+        <h3 class="font-semibold text-gray-800 mb-2">AI-Powered</h3>
+        <p class="text-sm text-gray-600">Generate code with simple prompts</p>
+      </div>
+      <div class="bg-white/80 backdrop-blur rounded-xl p-6 shadow-lg hover:shadow-xl transition">
+        <div class="text-4xl mb-3">⚡</div>
+        <h3 class="font-semibold text-gray-800 mb-2">Lightning Fast</h3>
+        <p class="text-sm text-gray-600">Get your website in minutes</p>
+      </div>
+      <div class="bg-white/80 backdrop-blur rounded-xl p-6 shadow-lg hover:shadow-xl transition">
+        <div class="text-4xl mb-3">🎨</div>
+        <h3 class="font-semibold text-gray-800 mb-2">Fully Responsive</h3>
+        <p class="text-sm text-gray-600">Works on all devices perfectly</p>
+      </div>
+    </div>
+
+    <div class="bg-gradient-to-r from-violet-500 to-purple-600 text-white rounded-xl p-8 shadow-2xl">
+      <p class="text-lg font-semibold mb-2">Ready to build something amazing?</p>
+      <p class="text-sm opacity-90">Type your website description in the prompt box above and watch the magic happen!</p>
+    </div>
+  </div>
+
+  <script>
+    const theme = localStorage.getItem('theme') || 'light';
+    if (theme === 'dark') {
+      document.body.classList.add('dark-mode');
+    }
+  </script>
 </body>
 </html>`
   );
