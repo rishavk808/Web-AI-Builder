@@ -151,8 +151,6 @@ const App = () => {
   const [isPlaceholder, setIsPlaceholder] = useState(true);
   const [code, setCode] = useState(getFallbackPreview(true));
 
-  const apiKey = import.meta.env.VITE_API_KEY || '';
-
   useEffect(() => {
     if (isPlaceholder) {
       setCode(getFallbackPreview(isDarkMode));
@@ -182,29 +180,22 @@ const App = () => {
   };
 
   // ✅ Call Gemini API safely using native fetch with standard exponential backoff
-  async function callGeminiAPI(payload, retries = 5, delay = 1000) {
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
-    
-    try {
-      const response = await fetch(url, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
-      });
-      
-      if (!response.ok) {
-        throw new Error(`HTTP Error: ${response.status}`);
-      }
-      
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      if (retries > 0) {
-        await new Promise(resolve => setTimeout(resolve, delay));
-        return callGeminiAPI(payload, retries - 1, delay * 2);
-      }
+  async function callGeminiAPI(promptText) {
+    const response = await fetch("/api/generate", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ prompt: promptText })
+    });
+
+    const data = await response.json();
+    if (!response.ok) {
+      const message = data?.error || data?.message || `HTTP Error: ${response.status}`;
+      const error = new Error(message);
+      error.status = response.status;
       throw error;
     }
+
+    return data;
   }
 
   async function getResponse() {
@@ -246,12 +237,8 @@ Final instruction: Output only the single fenced Markdown code block with the fu
 
 Website prompt: ${prompt}`;
 
-    const payload = {
-      contents: [{ parts: [{ text: text_prompt }] }]
-    };
-
     try {
-      const data = await callGeminiAPI(payload);
+      const data = await callGeminiAPI(text_prompt);
       const generatedText = data.candidates?.[0]?.content?.parts?.[0]?.text;
       if (generatedText) {
         setCode(extractCode(generatedText));
