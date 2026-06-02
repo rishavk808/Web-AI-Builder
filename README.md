@@ -57,55 +57,6 @@ Try describing what kind of website you want:
 
 ---
 
-## 🔧 Installation
-
-### Prerequisites
-- Node.js 16+ 
-- npm or yarn
-- Google API Key (free tier available)
-
-### Setup
-
-```bash
-# Clone the repository
-git clone https://github.com/yourusername/webai.git
-cd webai
-
-# Install dependencies
-npm install
-
-# Create .env file
-echo "GOOGLE_API_KEY=your_api_key_here" > .env
-
-# Run development server
-npm run dev
-
-# Build for production
-npm run build
-
-# Preview production build
-npm run preview
-```
-
----
-
-## 🔑 Environment Variables
-
-Create a `.env` file in the root directory:
-
-```env
-GOOGLE_API_KEY=your_google_api_key_here
-```
-
-**Get your API key:**
-1. Go to [Google AI Studio](https://aistudio.google.com/app/apikey)
-2. Click "Create API Key"
-3. Copy your key and paste into `.env`
-
-> **Important for Production**: Set `GOOGLE_API_KEY` as an environment variable in your Vercel project settings, not in the `.env` file.
-
----
-
 ## 📁 Project Structure
 
 ```
@@ -133,39 +84,10 @@ WebAI/
 
 ### Deploy to Vercel
 
-1. **Push to GitHub**
-   ```bash
-   git add .
-   git commit -m "Deploy WebAI"
-   git push origin main
-   ```
-
-2. **Connect to Vercel**
-   - Go to [vercel.com](https://vercel.com)
-   - Click "New Project"
-   - Import your GitHub repository
-
-3. **Set Environment Variables**
-   - In Vercel Project Settings → Environment Variables
-   - Add: `GOOGLE_API_KEY` = your_actual_api_key
-   - Select `Production` and `Preview`
-
-4. **Deploy**
-   - Vercel will auto-deploy on push
-   - Your app is live!
-
----
 
 ## 💡 API Rate Limits
 
 - **Free Tier**: 20 requests/day (resets every 24 hours)
-- **Paid Tier**: Higher quotas available with billing enabled
-
-To increase limits:
-1. Go to [Google Cloud Console](https://console.cloud.google.com/)
-2. Enable billing on your project
-3. Quotas increase instantly
-
 ---
 
 ## 🎨 Generated Website Features
@@ -182,14 +104,6 @@ Each AI-generated website includes:
 
 ---
 
-## 🔐 Security
-
-- API key is securely handled on the backend (Vercel serverless function)
-- No secrets exposed in client-side code
-- Environment variables protected in Vercel dashboard
-- Recommended: Regenerate API keys if exposed
-
----
 
 ## 🐛 Troubleshooting
 
@@ -204,54 +118,6 @@ Each AI-generated website includes:
 ### Empty Response
 - Your prompt may be too vague
 - Try: "Create a modern landing page with hero section, features, and CTA"
-
----
-
-## 📝 Future Enhancements
-
-- [ ] Save and manage multiple projects
-- [ ] Export to React/Vue components
-- [ ] Custom CSS preprocessing
-- [ ] Backend CMS integration
-- [ ] Template library
-- [ ] Collaboration features
-- [ ] Version history
-
----
-
-## 🤝 Contributing
-
-Contributions are welcome! Here's how:
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit changes (`git commit -m 'Add amazing feature'`)
-4. Push to branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
----
-
-## 📄 License
-
-This project is licensed under the MIT License — see the LICENSE file for details.
-
----
-
-## 🙏 Acknowledgments
-
-- [Google Gemini API](https://ai.google.dev/) — AI generation engine
-- [React](https://react.dev/) — UI framework
-- [Vite](https://vitejs.dev/) — Build tool
-- [Tailwind CSS](https://tailwindcss.com/) — Styling
-- [GSAP](https://gsap.com/) — Animations
-- [Vercel](https://vercel.com/) — Deployment platform
-
----
-
-## 📧 Contact & Support
-
-- **Issues**: [GitHub Issues](https://github.com/yourusername/webai/issues)
-- **Email**: your-email@example.com
 
 ---
 
