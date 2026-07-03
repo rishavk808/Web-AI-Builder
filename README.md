@@ -18,19 +18,17 @@ Turn simple text descriptions into production-ready HTML websites with one click
 - **✏️ Code Editor** — View and edit the generated HTML code directly
 - **💾 Download** — Export your generated website as a standalone HTML file
 - **🔄 Live Reload** — Instant preview updates as you refine your prompt
-- **🎬 Smooth Animations** — GSAP-powered animations and transitions in generated sites
 - **🌐 Production Ready** — AI generates clean, semantic HTML with accessibility support
 
 ---
 
 ## 🛠️ Tech Stack
 
-- **Frontend**: React 19 + Vite
+- **Frontend**: React + Vite
 - **AI Engine**: Google Gemini 2.5 Flash API
 - **Styling**: Tailwind CSS
 - **Code Editor**: Monaco Editor
 - **Icons**: React Icons
-- **Animations**: GSAP (in generated websites)
 - **Deployment**: Vercel (serverless functions)
 - **Build Tool**: Vite
 
@@ -97,7 +95,6 @@ Each AI-generated website includes:
 - **Responsive Design** — Mobile, tablet, desktop optimized
 - **Dark/Light Mode** — Toggle theme button included
 - **Modern Styling** — Clean typography, spacing, and color schemes
-- **Smooth Animations** — GSAP scroll effects and hover transitions
 - **Semantic HTML** — Accessibility-first code with ARIA labels
 - **Optimized Images** — Royalty-free placeholders from Unsplash
 - **Professional Layout** — Hero, features, CTA, footer sections
