@@ -346,12 +346,13 @@ Website prompt: ${prompt}`;
 
           <div className="h-[500px]">
             {isShowCode ? (
-              // Reliable Custom HTML/CSS Code Editor Fallback
-              <textarea
-                onChange={(e) => setCode(e.target.value)}
+              <Editor
+                height="100%"
+                language="html"
+                theme={isDarkMode ? "vs-dark" : "light"}
                 value={code}
-                className="w-full h-full p-6 font-mono text-[14px] bg-[#1a1a1e] text-neutral-200 border-none outline-none resize-none focus:ring-0 leading-relaxed"
-                spellCheck="false"
+                onChange={(value) => setCode(value ?? "")}
+                options={{ fontSize: 14, minimap: { enabled: true }, wordWrap: "on" }}
               />
             ) : (
               <>
